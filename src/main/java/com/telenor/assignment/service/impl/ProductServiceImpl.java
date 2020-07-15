@@ -1,6 +1,7 @@
 package com.telenor.assignment.service.impl;
 
 import com.telenor.assignment.model.Product;
+import com.telenor.assignment.model.helper.ProductType;
 import com.telenor.assignment.repository.ProductRepository;
 import com.telenor.assignment.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class ProductServiceImpl implements ProductService {
             Predicate p = cb.conjunction();
 
             if (!StringUtils.isEmpty(type)) {
-                p = cb.and(p, cb.equal(root.get("type"), type));
+                p = cb.and(p, cb.equal(root.get("type"), ProductType.getProductType(type)));
             }
             if (!StringUtils.isEmpty(city)) {
                 p = cb.and(p, cb.like(root.get("storeAddress"), "%" + city + "%"));
