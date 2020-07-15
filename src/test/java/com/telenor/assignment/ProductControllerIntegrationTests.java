@@ -1,21 +1,20 @@
 package com.telenor.assignment;
 
 
-import com.telenor.assignment.entity.ProductGetDTO;
+import com.telenor.assignment.entity.ProductGetAPIDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest(classes = SpringBootAssignmentApplication.class,
-        webEnvironment = WebEnvironment.RANDOM_PORT)/*
-@TestPropertySource(value={"classpath:application-dev.properties"})*/
-//@ActiveProfiles("dev")
+        webEnvironment = WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("dev")
 class ProductControllerIntegrationTests {
 
     @LocalServerPort
@@ -24,13 +23,12 @@ class ProductControllerIntegrationTests {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    @Sql({ "classpath:schema.sql", "classpath:data.sql" })
     @Test
     public void testProducts()
     {
         assertTrue(
                 this.restTemplate
-                        .getForObject("http://localhost:" + port + "/api/products", ProductGetDTO.class)
+                        .getForObject("http://localhost:" + port + "/api/products", ProductGetAPIDTO.class)
                         .getData().size() == 100);
     }
 

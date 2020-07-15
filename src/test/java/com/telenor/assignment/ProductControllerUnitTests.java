@@ -3,7 +3,9 @@ package com.telenor.assignment;
 import com.telenor.assignment.controller.ProductController;
 import com.telenor.assignment.dto.ProductGetDTO;
 import com.telenor.assignment.model.Product;
+import com.telenor.assignment.model.helper.ProductType;
 import com.telenor.assignment.repository.ProductRepository;
+import com.telenor.assignment.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,36 +30,32 @@ public class ProductControllerUnitTests {
     ProductController productController;
 
     @Mock
-    ProductRepository productRepository;
+    ProductService productService;
 
     @Test
     public void getProducts()
     {
-        // given a pre fined list
+        // given a pre defined list
         Product product1 = new Product();
         product1.setPrice(new BigDecimal(100.00));
         product1.setProperties("color:grön");
         product1.setStoreAddress("Nilsson gatan, Stockholm");
-        product1.setType("phone");
+        product1.setType(ProductType.PHONE);
         Product product2 = new Product();
         product2.setPrice(new BigDecimal(114.00));
         product2.setProperties("gb_limit:10");
         product2.setStoreAddress("Gustafsson gärdet, Malmö");
-        product2.setType("subscription");
+        product2.setType(ProductType.SUBSCRIPTION);
 
         List<Product> productList = new ArrayList<Product>();
         productList.addAll(Arrays.asList(product1, product2));
 
-       /* Specification<Product> productSpecification = (Specification<Product>) (root, query, cb) -> {
-            return cb.conjunction();
-        };*/
-
-        when(productRepository.findAll()).thenReturn(productList);
+        when(productService.findProducts(null,null,null,null,null)).thenReturn(productList);
 
         // when
         ProductGetDTO result = productController.getProducts(null,null,null,null,null);
 
-        // then
+        // then check the output and assert
         assertThat(result.getData().size()).isEqualTo(2);
 
         assertThat(result.getData().get(0).getPrice())

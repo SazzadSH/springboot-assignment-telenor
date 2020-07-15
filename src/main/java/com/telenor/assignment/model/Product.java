@@ -1,5 +1,8 @@
 package com.telenor.assignment.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.telenor.assignment.helper.ProductTypeConverter;
+import com.telenor.assignment.model.helper.ProductType;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -7,13 +10,15 @@ import java.math.BigDecimal;
 
 @Data
 @Entity(name = "products")
-public class Product {
+@JsonAutoDetect
+public class Product extends AbstractBaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "type")
-    private String type;
+    @Convert(converter = ProductTypeConverter.class)
+    private ProductType type;
 
     @Column(name = "price")
     private BigDecimal price;

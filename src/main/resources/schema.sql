@@ -6,5 +6,7 @@ CREATE TABLE products (
     type VARCHAR(250) NOT NULL,
     price DOUBLE NOT NULL,
     store_address VARCHAR(250) DEFAULT NULL,
-    properties VARCHAR(250) DEFAULT NULL
+    properties VARCHAR(250) DEFAULT NULL,
+    created_dt TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL,
+    modified_dt TIMESTAMP WITH TIME ZONE DEFAULT now() NOT NULL
 );
