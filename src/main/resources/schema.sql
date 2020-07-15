@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS products;
+
+
+CREATE TABLE products (
+    id INT AUTO_INCREMENT  PRIMARY KEY,
+    type VARCHAR(250) NOT NULL,
+    price DOUBLE NOT NULL,
+    store_address VARCHAR(250) DEFAULT NULL,
+    properties VARCHAR(250) DEFAULT NULL
+);
