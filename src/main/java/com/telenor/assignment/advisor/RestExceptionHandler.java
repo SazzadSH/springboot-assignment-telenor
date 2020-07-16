@@ -1,4 +1,4 @@
-package com.telenor.assignment.adviser;
+package com.telenor.assignment.advisor;
 
 import com.telenor.assignment.expection.IllegalProductTypeException;
 import com.telenor.assignment.helper.ApiErrorResponse;
@@ -12,9 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -34,4 +31,13 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return response;
     }
 
+    @ExceptionHandler({Exception.class})
+    @ResponseStatus(code=HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ApiErrorResponse<List<StackTraceElement>> errorResponseForException(Exception ex) {
+        ApiErrorResponse<List<StackTraceElement>> response = includeTraceForDebug ?
+                new ApiErrorResponse<>(HttpStatus.INTERNAL_SERVER_ERROR,ex) :
+                new ApiErrorResponse<>(HttpStatus.INTERNAL_SERVER_ERROR,ex.getMessage()) ;
+        return response;
+    }
 }

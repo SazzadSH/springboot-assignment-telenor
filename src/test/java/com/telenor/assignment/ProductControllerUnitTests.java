@@ -2,7 +2,9 @@ package com.telenor.assignment;
 
 import com.telenor.assignment.controller.ProductController;
 import com.telenor.assignment.dto.ProductGetDTO;
+import com.telenor.assignment.model.Phone;
 import com.telenor.assignment.model.Product;
+import com.telenor.assignment.model.Subscription;
 import com.telenor.assignment.model.helper.ProductType;
 import com.telenor.assignment.repository.ProductRepository;
 import com.telenor.assignment.service.ProductService;
@@ -36,32 +38,32 @@ public class ProductControllerUnitTests {
     public void getProducts()
     {
         // given a pre defined list
-        Product product1 = new Product();
-        product1.setPrice(new BigDecimal(100.00));
-        product1.setProperties("color:grön");
-        product1.setStoreAddress("Nilsson gatan, Stockholm");
-        product1.setType(ProductType.PHONE);
-        Product product2 = new Product();
-        product2.setPrice(new BigDecimal(114.00));
-        product2.setProperties("gb_limit:10");
-        product2.setStoreAddress("Gustafsson gärdet, Malmö");
-        product2.setType(ProductType.SUBSCRIPTION);
+        Phone phone = new Phone();
+        phone.setPrice(new BigDecimal(100.00));
+        phone.setColor("grön");
+        phone.setStoreAddress("Nilsson gatan, Stockholm");
+        Subscription subscription = new Subscription();
+        subscription.setPrice(new BigDecimal(114.00));
+        subscription.setGbLimit(new BigDecimal(10));
+        subscription.setStoreAddress("Gustafsson gärdet, Malmö");
 
         List<Product> productList = new ArrayList<Product>();
-        productList.addAll(Arrays.asList(product1, product2));
+        productList.addAll(Arrays.asList(phone, subscription));
 
-        when(productService.findProducts(null,null,null,null,null)).thenReturn(productList);
+        when(productService.findProducts(null,null,null,null,null, null,
+                null)).thenReturn(productList);
 
         // when
-        ProductGetDTO result = productController.getProducts(null,null,null,null,null);
+        ProductGetDTO result = productController.getProducts(null,null,null,null,
+                null, null, null );
 
         // then check the output and assert
         assertThat(result.getData().size()).isEqualTo(2);
 
         assertThat(result.getData().get(0).getPrice())
-                .isEqualTo(product1.getPrice());
+                .isEqualTo(phone.getPrice());
 
-        assertThat(result.getData().get(1).getType())
-                .isEqualTo(product2.getType());
+        assertThat(result.getData().get(1).getStoreAddress())
+                .isEqualTo(subscription.getStoreAddress());
     }
 }

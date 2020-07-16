@@ -2,7 +2,7 @@ package com.telenor.assignment.model.helper;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.telenor.assignment.expection.IllegalProductTypeException;
-import com.telenor.assignment.helper.EnumDbValue;
+import com.telenor.assignment.helper.enummapper.EnumDbValue;
 import lombok.Getter;
 
 import java.util.HashMap;
@@ -16,7 +16,6 @@ public enum ProductType implements EnumDbValue<String> {
 
     private String productType;
 
-    // Reverse lookup ProductType for getting a Key from it's values
     private static final Map<String, ProductType> lookup = new HashMap<>();
 
     private ProductType(String productType) {
@@ -48,7 +47,6 @@ public enum ProductType implements EnumDbValue<String> {
     public static ProductType getProductType(String value) {
         return Optional.ofNullable(lookup.get(value))
                 .orElseThrow(IllegalProductTypeException::new);
-        //lookup.computeIfAbsent(value, key -> { throw new IllegalProductTypeException(); });
     }
 
 }

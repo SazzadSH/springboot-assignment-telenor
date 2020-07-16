@@ -12,7 +12,6 @@ import org.springframework.util.StringUtils;
 import javax.persistence.criteria.Predicate;
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -26,12 +25,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> findProducts(String type, BigDecimal min_price, BigDecimal max_price, String city,
-                                         String properties) {
+                                         String color, BigDecimal gbLimitMin, BigDecimal gbLimitMax) {
         Specification<Product> productSpecification = (Specification<Product>) (root, query, cb) -> {
             Predicate p = cb.conjunction();
 
             if (!StringUtils.isEmpty(type)) {
-                p = cb.and(p, cb.equal(root.get("type"), ProductType.getProductType(type)));
+                p = cb.and(p, cb.equal(root.get("type"), type));
             }
             if (!StringUtils.isEmpty(city)) {
                 p = cb.and(p, cb.like(root.get("storeAddress"), "%" + city + "%"));
@@ -42,8 +41,14 @@ public class ProductServiceImpl implements ProductService {
             if (!StringUtils.isEmpty(max_price)) {
                 p = cb.and(p, cb.lessThanOrEqualTo(root.get("price"), max_price));
             }
-            if (!StringUtils.isEmpty(properties)) {
-                p = cb.and(p, cb.equal(root.get("properties"), properties));
+            if (!StringUtils.isEmpty(color)) {
+                p = cb.and(p, cb.equal(root.get("color"), color));
+            }
+            if (!StringUtils.isEmpty(gbLimitMin)) {
+                p = cb.and(p, cb.greaterThanOrEqualTo(root.get("gb_limit"), gbLimitMin));
+            }
+            if (!StringUtils.isEmpty(gbLimitMax)) {
+                p = cb.and(p, cb.lessThanOrEqualTo(root.get("gb_limit"), gbLimitMax));
             }
             return p;
         };

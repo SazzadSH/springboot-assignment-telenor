@@ -1,4 +1,4 @@
-package com.telenor.assignment.helper;
+package com.telenor.assignment.helper.enummapper;
 
 import javax.persistence.AttributeConverter;
 
