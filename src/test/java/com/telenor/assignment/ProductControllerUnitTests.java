@@ -2,21 +2,18 @@ package com.telenor.assignment;
 
 import com.telenor.assignment.controller.ProductController;
 import com.telenor.assignment.dto.ProductGetDTO;
+
 import com.telenor.assignment.model.Phone;
 import com.telenor.assignment.model.Product;
 import com.telenor.assignment.model.Subscription;
-import com.telenor.assignment.model.helper.ProductType;
-import com.telenor.assignment.repository.ProductRepository;
+
 import com.telenor.assignment.service.ProductService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
 
-import javax.persistence.criteria.Predicate;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -51,11 +48,11 @@ public class ProductControllerUnitTests {
         productList.addAll(Arrays.asList(phone, subscription));
 
         when(productService.findProducts(null,null,null,null,null, null,
-                null)).thenReturn(productList);
+                null, null)).thenReturn(productList);
 
         // when
         ProductGetDTO result = productController.getProducts(null,null,null,null,
-                null, null, null );
+                null, null, null, null);
 
         // then check the output and assert
         assertThat(result.getData().size()).isEqualTo(2);
