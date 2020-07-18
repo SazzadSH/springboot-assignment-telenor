@@ -8,7 +8,7 @@ import java.time.OffsetDateTime;
 import java.util.Date;
 
 
-
+@MappedSuperclass
 public @Data
 abstract class AbstractBaseEntity {
 

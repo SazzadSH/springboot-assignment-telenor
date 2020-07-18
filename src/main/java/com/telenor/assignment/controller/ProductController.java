@@ -1,18 +1,15 @@
 package com.telenor.assignment.controller;
 
 import com.telenor.assignment.dto.ProductGetDTO;
-import com.telenor.assignment.dto.ProductGetFiltersDTO;
 import com.telenor.assignment.model.Product;
 import com.telenor.assignment.service.ProductService;
-import com.telenor.assignment.util.Constants;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +21,9 @@ import static com.telenor.assignment.util.Constants.*;
 @RestController
 @RequestMapping(value = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class ProductController {
+    Logger logger = LoggerFactory.getLogger(this.getClass());
+
     private final ProductService productService;
-    private static Logger logger = LogManager.getLogger(ProductController.class);
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
@@ -65,26 +63,4 @@ public class ProductController {
                 property, gbLimitMin, gbLimitMax);
         return ProductGetDTO.builder().data((products)).build();
     }
-
-    /*@GetMapping("/products")
-    @ResponseBody
-    @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(
-            value = "Get Product information.",
-            notes = "Get Product information.",
-            response = ProductGetDTO.class)
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = SUCCESS_REQUEST, response = ProductGetDTO.class),
-            @ApiResponse(code = 404, message = RESOURCE_NOT_FOUND_ERROR),
-            @ApiResponse(code = 404, message = BAD_REQUEST),
-            @ApiResponse(code = 500, message = INTERNAL_SERVER_ERROR)
-    })
-    public ProductGetDTO getProducts(ProductGetFiltersDTO filters) {
-        logger.debug("Product Filters:"+ filters);
-
-        List<Product> products = productService.findProducts(filters.getType(), filters.getMinPrice(),
-                filters.getMaxPrice(), filters.getCity(), filters.getPropertyDetails().getColor(),
-                filters.getPropertyDetails().getGbLimitMin(), filters.getPropertyDetails().getGbLimitMax());
-        return ProductGetDTO.builder().data((products)).build();
-    }*/
 }

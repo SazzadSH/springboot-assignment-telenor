@@ -26,9 +26,6 @@ public class SubProductPropertyManager {
         for(Class cls: classList){
             getClassListInMapOfClassProperty(this.classListInMapOfClassProperty,cls);
         }
-        /*for(int i = 0; i < classList.size(); i++){
-            getClassListInMapOfClassProperty(this.classListInMapOfClassProperty,classList.get(i));
-        }*/
     }
     private <T> void getClassListInMapOfClassProperty(Map<String, List<Class>> classListInMapOfClassProperty,
                                                       Class<T> cls){

@@ -1,9 +1,8 @@
-package com.telenor.assignment.dto.helper;
+package com.telenor.assignment.model.helper;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.telenor.assignment.expection.IllegalProductTypeException;
 import com.telenor.assignment.helper.enummapper.EnumDbValue;
-import com.telenor.assignment.model.helper.ProductType;
 import lombok.Getter;
 
 import java.util.HashMap;

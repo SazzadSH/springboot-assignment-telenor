@@ -22,18 +22,11 @@ public abstract class Product extends AbstractBaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*@Column(name = "type")
-    @Convert(converter = ProductTypeConverter.class)
-    private ProductType type;*/
-
     @Column(name = "price")
     private BigDecimal price;
 
     @Column(name = "store_address")
     private String storeAddress;
-
-    /*@Column(name = "properties")
-    private String properties;*/
 
     public abstract String getType();
 
