@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 
+import static com.telenor.assignment.util.Constants.ERROR_RESPONSE_DATE_FORMAT;
 import static com.telenor.assignment.util.Constants.UNKNOWN_ERROR_RESPONSE_MESSAGE;
 
 @Data
@@ -18,7 +19,7 @@ public class ApiErrorResponse<T> {
     private String error;
     private HttpStatus status;
     private int code;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = Constants.ERROR_RESPONSE_DATE_FORMAT)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = ERROR_RESPONSE_DATE_FORMAT)
     private LocalDateTime timestamp;
     private String stacktrace;
 

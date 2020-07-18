@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.telenor.assignment.util.Constants.*;
+
 @RestController
 @RequestMapping(value = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class ProductController {
@@ -29,16 +31,16 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(value = "/products")
+    @GetMapping(value = "/product")
     @ApiOperation(
             value = "Get Product information.",
             notes = "Get Product information.",
             response = ProductGetDTO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = Constants.SUCCESS_REQUEST, response = ProductGetDTO.class),
-            @ApiResponse(code = 404, message = Constants.RESOURCE_NOT_FOUND_ERROR),
-            @ApiResponse(code = 404, message = Constants.BAD_REQUEST),
-            @ApiResponse(code = 500, message = Constants.INTERNAL_SERVER_ERROR)
+            @ApiResponse(code = 200, message = SUCCESS_REQUEST, response = ProductGetDTO.class),
+            @ApiResponse(code = 404, message = RESOURCE_NOT_FOUND_ERROR),
+            @ApiResponse(code = 404, message = BAD_REQUEST),
+            @ApiResponse(code = 500, message = INTERNAL_SERVER_ERROR)
     })
     public ProductGetDTO getProducts(
             @ApiParam(value = "The product type. (String. Can be 'phone' or 'subscription')",
@@ -47,7 +49,7 @@ public class ProductController {
             @ApiParam(value = "The minimum price in SEK. (Number)")
             @RequestParam(name = "min_price", required = false) BigDecimal minPrice,
             @ApiParam(value = "The maximum price in SEK. (Number)")
-            @RequestParam(name = "maxPrice", required = false) BigDecimal maxPrice,
+            @RequestParam(name = "max_price", required = false) BigDecimal maxPrice,
             @ApiParam(value = "The city in which a store is located. (String)")
             @RequestParam(name = "city", required = false) String city,
             @ApiParam(value = "The name of the property. (String. Can be 'color' or 'gb_limit')")
@@ -59,8 +61,8 @@ public class ProductController {
             @ApiParam(value = "The maximum GB limit of the subscription. (Number)")
             @RequestParam(name = "property.gb_limit_max", required = false) BigDecimal gbLimitMax
     ) {
-        List<Product> products = productService.findProducts(type, minPrice, maxPrice, city, property, color,
-                                                        gbLimitMin, gbLimitMax);
+        List<Product> products = productService.findProductsWithCriteria(type, minPrice, maxPrice, city, color,
+                property, gbLimitMin, gbLimitMax);
         return ProductGetDTO.builder().data((products)).build();
     }
 
@@ -72,10 +74,10 @@ public class ProductController {
             notes = "Get Product information.",
             response = ProductGetDTO.class)
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = Constants.SUCCESS_REQUEST, response = ProductGetDTO.class),
-            @ApiResponse(code = 404, message = Constants.RESOURCE_NOT_FOUND_ERROR),
-            @ApiResponse(code = 404, message = Constants.BAD_REQUEST),
-            @ApiResponse(code = 500, message = Constants.INTERNAL_SERVER_ERROR)
+            @ApiResponse(code = 200, message = SUCCESS_REQUEST, response = ProductGetDTO.class),
+            @ApiResponse(code = 404, message = RESOURCE_NOT_FOUND_ERROR),
+            @ApiResponse(code = 404, message = BAD_REQUEST),
+            @ApiResponse(code = 500, message = INTERNAL_SERVER_ERROR)
     })
     public ProductGetDTO getProducts(ProductGetFiltersDTO filters) {
         logger.debug("Product Filters:"+ filters);

@@ -8,4 +8,6 @@ public class Constants {
     public static final String INTERNAL_SERVER_ERROR = "Internal Server Error.";
     public static final String RESOURCE_NOT_FOUND_ERROR = "Resource not found.";
     public static final String SUCCESS_REQUEST = "API Returned Data.";
+    public static final String PHONE_TABLE = "phone";
+    public static final String SUBSCRIPTION_TABLE = "subscription";
 }
