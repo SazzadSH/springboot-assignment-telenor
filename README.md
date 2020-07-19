@@ -92,3 +92,11 @@ docker run -p 8080:8080 springboot-assignment-telenor
 ~~~
 NB: Need to make sure, the port 8080 is free.
 
+Prebuild image is also available at the following URL
+
+[DockerHub/nazmulnaim/springboot-assignment-telenor](https://hub.docker.com/repository/docker/nazmulnaim/springboot-assignment-telenor)
+
+To run the prebuild image -
+~~~
+docker run -p 8080:8080 nazmulnaim/springboot-assignment-telenor:latest
+~~~
