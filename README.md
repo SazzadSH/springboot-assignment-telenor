@@ -1,14 +1,14 @@
-# **Guide**
+## Guide
 
-This REST API based project is built with spring boot version 2.3.1. Java Runtime Environment 8 is required to run the application as well as to build the application JDK8 is the minimum requirement.
+- This REST API based project is built with spring boot version 2.3.1. Java Runtime Environment 8 is required to run the application as well as to build the application JDK8 is the minimum requirement.
 
-The purpose of the project is fairly simple, there is only one API which serves response based on the filter criteria.
+- The purpose of the project is fairly simple, there is only one API which serves response based on the filter criteria.
 
 ![Product GET API](docs/image/Product-Get-API.png)
 
-The expected response is a JSON array with the products in a 'data' wrapper. 
+- The expected response is a JSON array with the products in a 'data' wrapper. 
 
-Example: 
+**Example:** 
 ```
 GET /product?type=subscription&max_price=1000&city=Stockholm
 {
@@ -29,25 +29,38 @@ GET /product?type=subscription&max_price=1000&city=Stockholm
 }
 ```
 
-As persistence layer in memory H2 is being used and to manage persistence Spring Data JPA 2.2 is being used.
+- As persistence layer in memory H2 is being used and to manage persistence Spring Data JPA 2.2 is being used.
 
-Request and Response has been validated by HandlerInterceptorAdapter and ResponseBodyAdvice available under validator package, response has been delivered with an immutable DTO.
+- Request and Response has been validated by HandlerInterceptorAdapter and ResponseBodyAdvice available under validator package, response has been delivered with an immutable DTO.
 
-Several auto converter has been introduced to map request parameter with Enum instance which can be found under helper package and the configuration is available at config package
+- Several auto converter has been introduced to map request parameter with Enum instance which can be found under helper package and the configuration is available at config package
 
-To handle exception gracefully with ResponseEntityExceptionHandler 
+- To handle exception gracefully with ResponseEntityExceptionHandler 
 
-The class diagram of the database entity is followed - 
+- The class diagram of the database entity is followed - 
 
 ![Product GET API](docs/image/Product-Entity-Class-Diagram.jpg)
 
-To achieve polymorphic object query JPA inheritance singe table strategy has come in picture.
+- To achieve polymorphic object query JPA inheritance singe table strategy has come in picture.
 
-TTD approach is being following during the development, Including unit testing and integration testing 4 different types style is available at test folder.
-> 1. Unit testing with mockito jupiter
-> 2. Unit testing Spring Test Framework
-> 3. JPA testing with @DataJpaTest
-> 4. Integration testing with TestRestTemplate
+- TTD approach is being following during the development, Including unit testing and integration testing 4 different types style is available at test folder.
+>> 1. Unit testing with mockito jupiter
+>> 2. Unit testing Spring Test Framework
+>> 3. JPA testing with @DataJpaTest
+>> 4. Integration testing with TestRestTemplate
+
+## Prerequisite
+
+You should have following tools installed in your system to run the application
+
+- jdk-1.8.0
+
+- maven 3.6.3 (Optional. Requires, if you don't use mvnw/docker)
+
+- docker (Optional. Requires, if run with docker)
+
+- docker-compose (Optional. Requires, if run with docker-compose)
+
 
 **Build the application with Maven**
 
@@ -67,16 +80,22 @@ Again you will need to have minimum JDK8 available at you PATH variable. If you 
 java -jar target/springboot-assignment-telenor.jar
 ~~~
 
+It's an spring boot application. So, I can be run with spring-boot-maven plug-in like below
+
+```
+./mvnw spring-boot:run
+```
+
 **Build the Docker image**
 
-S1.
+- S1.
 
 To build a docker image with the package, that has been generated at the previous step following command is necessary from command line.
 ~~~
 docker build -t springboot-assignment-telenor .
 ~~~
 
-S2.
+- S2.
 
 At file DockerfileBuildWIthMavenImage is has been illustrated how to build the package from this project source code with maven docker image and then build the docker image. 
 Its pretty helpful if no JDK is installed in the system. Only dependency is docker. Following is the command -
@@ -99,4 +118,21 @@ Prebuild image is also available at the following URL
 To run the prebuild image -
 ~~~
 docker run -p 8080:8080 nazmulnaim/springboot-assignment-telenor:latest
+~~~
+
+or, using docker-compose
+```
+docker-compose up -d
+```
+There is also another docker compose file for development purpose.
+
+**Access the application from browser**
+
+Assuming the application is running on local machine, if so then the URL to access the swagger defination will be - 
+~~~
+http://localhost:8080/swagger-ui.html#/
+~~~
+And the API URL is - 
+~~~
+http://localhost:8080/api/product
 ~~~
