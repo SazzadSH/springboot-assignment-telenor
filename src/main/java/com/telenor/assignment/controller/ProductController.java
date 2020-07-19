@@ -39,6 +39,7 @@ public class ProductController {
             response = ProductGetDTO.class)
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = SUCCESS_REQUEST, response = ProductGetDTO.class),
+            @ApiResponse(code = 204, message = NO_PRODUCT_FOUND),
             @ApiResponse(code = 404, message = RESOURCE_NOT_FOUND_ERROR),
             @ApiResponse(code = 404, message = BAD_REQUEST),
             @ApiResponse(code = 500, message = INTERNAL_SERVER_ERROR)

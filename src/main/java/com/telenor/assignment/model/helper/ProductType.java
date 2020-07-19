@@ -31,20 +31,13 @@ public enum ProductType implements EnumWithValue<String> {
         return productType;
     }
 
-    public static ProductType of(String productType) {
-        return Stream.of(ProductType.values())
-                .filter(p -> p.getStringValue().equals(productType))
-                .findFirst()
-                .orElseThrow(IllegalProductTypeException::new);
-    }
-
     @Override
     public String getValue() {
         return productType;
     }
 
-    public static ProductType getProductType(String value) {
-        return Optional.ofNullable(lookup.get(value))
+    public static boolean checkProductType(String value) {
+        return Optional.ofNullable(lookup.get(value)!=null)
                 .orElseThrow(IllegalProductTypeException::new);
     }
 

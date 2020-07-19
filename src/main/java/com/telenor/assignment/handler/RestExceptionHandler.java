@@ -1,6 +1,7 @@
-package com.telenor.assignment.advisor;
+package com.telenor.assignment.handler;
 
 import com.telenor.assignment.expection.IllegalProductTypeException;
+import com.telenor.assignment.expection.IllegalPropertyTypeException;
 import com.telenor.assignment.helper.ApiErrorResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.Ordered;
@@ -22,10 +23,11 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @Value("${include.trace.for.debug:#{false}}")
     private boolean includeTraceForDebug;
 
-    @ExceptionHandler({IllegalProductTypeException.class})
+    @ExceptionHandler({IllegalArgumentException.class,IllegalProductTypeException.class,
+            IllegalPropertyTypeException.class})
     @ResponseStatus(code=HttpStatus.BAD_REQUEST)
     @ResponseBody
-    public ApiErrorResponse<List<StackTraceElement>> errorResponseForIllegalProductTypeException(Exception ex) {
+    public ApiErrorResponse<List<StackTraceElement>> errorResponseForIllegalArgumentException(Exception ex) {
         ApiErrorResponse<List<StackTraceElement>> response = includeTraceForDebug ?
                 new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,ex) :
                 new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,ex.getMessage()) ;

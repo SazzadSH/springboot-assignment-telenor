@@ -22,7 +22,7 @@ public class EnumValueConverter<S extends java.io.Serializable, T extends EnumWi
                 return t;
             }
         }
-        return null;
+        throw new IllegalArgumentException();
     }
 
 }

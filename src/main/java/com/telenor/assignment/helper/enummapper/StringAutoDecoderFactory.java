@@ -7,6 +7,6 @@ public class StringAutoDecoderFactory
         implements ConverterFactory<String, String> {
     @Override
     public <T extends String> Converter<String, T> getConverter(Class<T> aClass) {
-        return new StringAutoDecoder();
+        return new StringAutoURLDecoder();
     }
 }

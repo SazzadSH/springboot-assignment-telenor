@@ -335,4 +335,30 @@ class ProductControllerIntegrationTests {
                 , 10);
     }
 
+    @Test
+    public void testGetRequestProductsWithProductTypeUnknown()
+    {
+        logger.info(new StringBuffer().append("NILOG::")
+                .append("inside testGetRequestProductsWithProductTypeUnknown")
+                .toString());
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:" + port + "/api/product")
+                .queryParam(TYPE, "unknown");
+        ResponseEntity<ProductGetAPIDTO> productGetAPIDTOResponseEntity = this.restTemplate
+                        .getForEntity(builder.toUriString(), ProductGetAPIDTO.class);
+        assertEquals(productGetAPIDTOResponseEntity.getStatusCode(),HttpStatus.BAD_REQUEST);
+    }
+
+    @Test
+    public void testGetRequestProductsWithPropertyTypeUnknown()
+    {
+        logger.info(new StringBuffer().append("NILOG::")
+                .append("inside testGetRequestProductsWithProductTypeUnknown")
+                .toString());
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://localhost:" + port + "/api/product")
+                .queryParam(PROPERTY, "unknown");
+        ResponseEntity<ProductGetAPIDTO> productGetAPIDTOResponseEntity = this.restTemplate
+                        .getForEntity(builder.toUriString(), ProductGetAPIDTO.class);
+        assertEquals(productGetAPIDTOResponseEntity.getStatusCode(),HttpStatus.BAD_REQUEST);
+    }
+
 }
