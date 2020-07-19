@@ -23,15 +23,15 @@ public class SubProductPropertyManager {
 
     @PostConstruct
     private <T> void init(){
-        for(Class cls: classList){
-            getClassListInMapOfClassProperty(this.classListInMapOfClassProperty,cls);
+        for(Class clazz: classList){
+            getClassListInMapOfClassProperty(this.classListInMapOfClassProperty,clazz);
         }
     }
     private <T> void getClassListInMapOfClassProperty(Map<String, List<Class>> classListInMapOfClassProperty,
-                                                      Class<T> cls){
+                                                      Class<T> clazz){
         logger.info(new StringBuilder().append("NILOG::Parsing Entity Class::")
-                .append(cls.getSimpleName()).toString());
-        for (Field field : cls.getDeclaredFields()) {
+                .append(clazz.getSimpleName()).toString());
+        for (Field field : clazz.getDeclaredFields()) {
             String columnName;
             if (field.isAnnotationPresent(Column.class)) {
                 columnName = field.getAnnotation(Column.class).name();
@@ -40,11 +40,11 @@ public class SubProductPropertyManager {
             }
             if(classListInMapOfClassProperty.containsKey(columnName)){
                 List<Class> classList = classListInMapOfClassProperty.get(columnName);
-                classList.add(cls);
+                classList.add(clazz);
                 classListInMapOfClassProperty.put(columnName,classList);
             }else{
                 List<Class> classList = new ArrayList<>();
-                classList.add(cls);
+                classList.add(clazz);
                 classListInMapOfClassProperty.put(columnName,classList);
             }
             logger.info(new StringBuilder().append("NILOG::").append(columnName).toString());

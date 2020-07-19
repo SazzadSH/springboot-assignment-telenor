@@ -2,6 +2,8 @@ package com.telenor.assignment.controller;
 
 import com.telenor.assignment.dto.ProductGetDTO;
 import com.telenor.assignment.model.Product;
+import com.telenor.assignment.model.helper.ProductType;
+import com.telenor.assignment.model.helper.PropertyType;
 import com.telenor.assignment.service.ProductService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -41,23 +44,22 @@ public class ProductController {
             @ApiResponse(code = 500, message = INTERNAL_SERVER_ERROR)
     })
     public ProductGetDTO getProducts(
-            @ApiParam(value = "The product type. (String. Can be 'phone' or 'subscription')",
-                    allowableValues = "phone,subscription")
-            @RequestParam(name = "type", required = false) String type,
+            @ApiParam(value = "The product type. (String. Can be 'phone' or 'subscription')")
+            @RequestParam(name = TYPE, required = false) ProductType type,
             @ApiParam(value = "The minimum price in SEK. (Number)")
-            @RequestParam(name = "min_price", required = false) BigDecimal minPrice,
+            @RequestParam(name = MIN_PRICE, required = false) BigDecimal minPrice,
             @ApiParam(value = "The maximum price in SEK. (Number)")
-            @RequestParam(name = "max_price", required = false) BigDecimal maxPrice,
+            @RequestParam(name = MAX_PRICE, required = false) BigDecimal maxPrice,
             @ApiParam(value = "The city in which a store is located. (String)")
-            @RequestParam(name = "city", required = false) String city,
+            @RequestParam(name = CITY, required = false) String city,
             @ApiParam(value = "The name of the property. (String. Can be 'color' or 'gb_limit')")
-            @RequestParam(name = "property", required = false) String property,
+            @RequestParam(name = PROPERTY, required = false) PropertyType property,
             @ApiParam(value = "The color of the phone. (String)")
-            @RequestParam(name = "property.color", required = false) String color,
+            @RequestParam(name = PROPERTY_COLOR, required = false) String color,
             @ApiParam(value = "The minimum GB limit of the subscription. (Number)")
-            @RequestParam(name = "property.gb_limit_min", required = false) BigDecimal gbLimitMin,
+            @RequestParam(name = PROPERTY_GB_LIMIT_MIN, required = false) Integer gbLimitMin,
             @ApiParam(value = "The maximum GB limit of the subscription. (Number)")
-            @RequestParam(name = "property.gb_limit_max", required = false) BigDecimal gbLimitMax
+            @RequestParam(name = PROPERTY_GB_LIMIT_MAX, required = false) Integer gbLimitMax
     ) {
         List<Product> products = productService.findProductsWithCriteria(type, minPrice, maxPrice, city, color,
                 property, gbLimitMin, gbLimitMax);

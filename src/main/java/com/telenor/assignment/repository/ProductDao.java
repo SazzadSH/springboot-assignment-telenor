@@ -8,6 +8,6 @@ import java.util.List;
 public interface ProductDao {
 
     public List<Product> findProductsWithCriteria(String type, BigDecimal minPrice, BigDecimal maxPrice, String city,
-                                                  String color, String property, BigDecimal gbLimitMin,
-                                                  BigDecimal gbLimitMax);
+                                                  String color, String property, Integer gbLimitMin,
+                                                  Integer gbLimitMax);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -25,6 +26,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
     @ResponseStatus(code=HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ApiErrorResponse<List<StackTraceElement>> errorResponseForIllegalProductTypeException(Exception ex) {
+        ApiErrorResponse<List<StackTraceElement>> response = includeTraceForDebug ?
+                new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,ex) :
+                new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,ex.getMessage()) ;
+        return response;
+    }
+
+    @ExceptionHandler({UnsupportedEncodingException.class})
+    @ResponseStatus(code=HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ApiErrorResponse<List<StackTraceElement>> errorResponseForUnsupportedEncodingException(Exception ex) {
         ApiErrorResponse<List<StackTraceElement>> response = includeTraceForDebug ?
                 new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,ex) :
                 new ApiErrorResponse<>(HttpStatus.BAD_REQUEST,ex.getMessage()) ;

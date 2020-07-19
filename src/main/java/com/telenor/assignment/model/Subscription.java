@@ -16,7 +16,7 @@ import static com.telenor.assignment.util.Constants.SUBSCRIPTION_TABLE;
 public class Subscription extends Product {
     @JsonIgnore
     @Column(name = "gb_limit")
-    private BigDecimal gbLimit;
+    private Integer gbLimit;
 
     @Override
     public String getType() {
@@ -25,7 +25,7 @@ public class Subscription extends Product {
 
     @Override
     public String getProperties() {
-        return new StringBuffer().append("gb_limit:").append(getGbLimit()).toString();
+        return new StringBuffer().append("gb_limit:").append(getGbLimit().toString()).toString();
     }
 
 

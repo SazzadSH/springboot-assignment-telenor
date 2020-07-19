@@ -2,16 +2,15 @@ package com.telenor.assignment.model.helper;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.telenor.assignment.expection.IllegalProductTypeException;
-import com.telenor.assignment.helper.enummapper.EnumDbValue;
-import lombok.Getter;
+import com.telenor.assignment.helper.enummapper.EnumWithValue;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-@Getter
-public enum ProductType implements EnumDbValue<String> {
+
+public enum ProductType implements EnumWithValue<String> {
     PHONE("phone"), SUBSCRIPTION("subscription");
 
     private String productType;
@@ -24,23 +23,23 @@ public enum ProductType implements EnumDbValue<String> {
 
     static {
         for (ProductType item : ProductType.values())
-            lookup.put(item.getValue(), item);
+            lookup.put(item.getStringValue(), item);
     }
 
     @JsonValue
-    private final String getValue() {
+    public final String getStringValue() {
         return productType;
     }
 
     public static ProductType of(String productType) {
         return Stream.of(ProductType.values())
-                .filter(p -> p.getProductType().equals(productType))
+                .filter(p -> p.getStringValue().equals(productType))
                 .findFirst()
                 .orElseThrow(IllegalProductTypeException::new);
     }
 
     @Override
-    public String getDbVal() {
+    public String getValue() {
         return productType;
     }
 

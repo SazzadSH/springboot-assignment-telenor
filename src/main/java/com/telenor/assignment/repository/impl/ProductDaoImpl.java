@@ -19,6 +19,7 @@ import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 import static com.telenor.assignment.util.Constants.PHONE_TABLE;
 import static com.telenor.assignment.util.Constants.SUBSCRIPTION_TABLE;
@@ -36,8 +37,8 @@ public class ProductDaoImpl implements ProductDao {
 
 
     public List<Product> findProductsWithCriteria(String type, BigDecimal minPrice, BigDecimal maxPrice, String city,
-                                                  String color, String property, BigDecimal gbLimitMin,
-                                                  BigDecimal gbLimitMax) {
+                                                  String color, String property, Integer gbLimitMin,
+                                                  Integer gbLimitMax) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         Predicate predicate = criteriaBuilder.conjunction();
         CriteriaQuery<Product> criteriaQuery = criteriaBuilder.createQuery(Product.class);
@@ -55,13 +56,13 @@ public class ProductDaoImpl implements ProductDao {
                     criteriaBuilder.like(productRoot.get(Product_.storeAddress), "%" + city + "%")
             );
         }
-        if (minPrice != null && minPrice.compareTo(BigDecimal.ZERO) > 0) {
+        if (Optional.ofNullable(minPrice).orElse(new BigDecimal(0)).compareTo(BigDecimal.ZERO) > 0) {
             predicate = criteriaBuilder.and(
                     predicate,
                     criteriaBuilder.greaterThanOrEqualTo(productRoot.get(Product_.price), minPrice)
             );
         }
-        if (maxPrice != null && maxPrice.compareTo(BigDecimal.ZERO) > 0) {
+        if (Optional.ofNullable(maxPrice).orElse(new BigDecimal(0)).compareTo(BigDecimal.ZERO) > 0) {
             predicate = criteriaBuilder.and(
                     predicate,
                     criteriaBuilder.lessThanOrEqualTo(productRoot.get(Product_.price), maxPrice)
@@ -90,7 +91,7 @@ public class ProductDaoImpl implements ProductDao {
                     )
             );
         }
-        if (gbLimitMin != null && gbLimitMin.compareTo(BigDecimal.ZERO) > 0) {
+        if (Optional.ofNullable(gbLimitMin).orElse(0) > 0) {
             predicate = criteriaBuilder.and(
                     predicate,
                     criteriaBuilder.and(
@@ -101,7 +102,7 @@ public class ProductDaoImpl implements ProductDao {
                     )
             );
         }
-        if (gbLimitMax != null && gbLimitMax.compareTo(BigDecimal.ZERO) > 0) {
+        if (Optional.ofNullable(gbLimitMax).orElse(0) > 0) {
             predicate = criteriaBuilder.and(
                     predicate,
                     criteriaBuilder.and(
