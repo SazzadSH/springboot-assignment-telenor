@@ -97,8 +97,13 @@ docker build -t springboot-assignment-telenor .
 
 - S2.
 
+**[Multi-stage](https://docs.docker.com/develop/develop-images/multistage-build/) Docker build: (Everything using docker)**
+
+It's a great way to ensure builds are 100% reproducible AND as lean as possible. On the downside a Maven build in Docker may have to download many dependencies each time it runs. But RUN’ing the `dependency:go-offline` goal, this will download most* of the dependencies required for the build and cache them for as long as the `pom.xml` **doesn’t change**.
+
 At file DockerfileBuildWIthMavenImage is has been illustrated how to build the package from this project source code with maven docker image and then build the docker image. 
 Its pretty helpful if no JDK is installed in the system. Only dependency is docker. Following is the command -
+
 ~~~
 docker build -t springboot-assignment-telenor -f DockerfileBuildWIthMavenImage .
 ~~~
@@ -125,6 +130,16 @@ or, using docker-compose
 docker-compose up -d
 ```
 There is also another docker compose file for development purpose.
+
+**Build/Run with docker-compose**
+
+To, build the  docker image and run it with docker-compose simply execute this command below
+
+```
+ docker-compose -f docker-compose.dev.yml up -d
+```
+
+It's will first build the image with the docker context, Then run the app in 8080 port
 
 **Access the application from browser**
 
