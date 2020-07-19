@@ -9,8 +9,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +20,10 @@ import java.util.List;
 
 import static com.telenor.assignment.util.Constants.*;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/api", produces = { MediaType.APPLICATION_JSON_VALUE })
 public class ProductController {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final ProductService productService;
     @Autowired

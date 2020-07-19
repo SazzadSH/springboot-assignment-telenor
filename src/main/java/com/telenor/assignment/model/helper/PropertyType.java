@@ -23,21 +23,21 @@ public enum PropertyType implements EnumWithValue<String> {
 
     static {
         for (PropertyType item : PropertyType.values())
-            lookup.put(item.getStringValue(), item);
+            lookup.put(item.getValue(), item);
     }
 
     @JsonValue
-    public final String getStringValue() {
-        return propertyType;
-    }
-
     @Override
     public String getValue() {
         return propertyType;
     }
 
-    public static Boolean checkPropertyType(String value) {
-        return Optional.ofNullable(lookup.get(value)!=null)
+    public static Boolean hasPropertyType(String value) {
+        return lookup.get(value)!=null;
+    }
+
+    public static PropertyType getPropertyType(String value) {
+        return Optional.ofNullable(lookup.get(value))
                 .orElseThrow(IllegalPropertyTypeException::new);
     }
 }

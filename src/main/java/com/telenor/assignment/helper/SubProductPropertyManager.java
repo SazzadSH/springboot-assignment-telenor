@@ -3,8 +3,7 @@ package com.telenor.assignment.helper;
 import com.telenor.assignment.model.Phone;
 import com.telenor.assignment.model.Subscription;
 import lombok.Getter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
@@ -12,9 +11,9 @@ import javax.persistence.Column;
 import java.lang.reflect.Field;
 import java.util.*;
 
+@Slf4j
 @Component
 public class SubProductPropertyManager {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Getter
     private Map<String, List<Class>> classListInMapOfClassProperty = new HashMap<>();
@@ -29,8 +28,8 @@ public class SubProductPropertyManager {
     }
     private <T> void getClassListInMapOfClassProperty(Map<String, List<Class>> classListInMapOfClassProperty,
                                                       Class<T> clazz){
-        logger.info(new StringBuilder().append("NILOG::Parsing Entity Class::")
-                .append(clazz.getSimpleName()).toString());
+        log.info("NILOG::Parsing Entity Class::" +
+                clazz.getSimpleName());
         for (Field field : clazz.getDeclaredFields()) {
             String columnName;
             if (field.isAnnotationPresent(Column.class)) {
@@ -47,7 +46,7 @@ public class SubProductPropertyManager {
                 classList.add(clazz);
                 classListInMapOfClassProperty.put(columnName,classList);
             }
-            logger.info(new StringBuilder().append("NILOG::").append(columnName).toString());
+            log.info("NILOG::" + columnName);
         }
     }
 }

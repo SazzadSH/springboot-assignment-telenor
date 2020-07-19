@@ -25,7 +25,7 @@ public class Subscription extends Product {
 
     @Override
     public String getProperties() {
-        return new StringBuffer().append("gb_limit:").append(getGbLimit().toString()).toString();
+        return "gb_limit:" + getGbLimit().toString();
     }
 
 

@@ -23,21 +23,21 @@ public enum ProductType implements EnumWithValue<String> {
 
     static {
         for (ProductType item : ProductType.values())
-            lookup.put(item.getStringValue(), item);
+            lookup.put(item.getValue(), item);
     }
 
     @JsonValue
-    public final String getStringValue() {
-        return productType;
-    }
-
     @Override
     public String getValue() {
         return productType;
     }
 
-    public static boolean checkProductType(String value) {
-        return Optional.ofNullable(lookup.get(value)!=null)
+    public static boolean hasProductType(String value) {
+        return lookup.get(value)!=null;
+    }
+
+    public static ProductType getProductType(String value) {
+        return Optional.ofNullable(lookup.get(value))
                 .orElseThrow(IllegalProductTypeException::new);
     }
 

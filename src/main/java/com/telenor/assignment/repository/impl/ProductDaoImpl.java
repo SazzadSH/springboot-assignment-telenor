@@ -3,8 +3,7 @@ package com.telenor.assignment.repository.impl;
 import com.telenor.assignment.helper.SubProductPropertyManager;
 import com.telenor.assignment.model.*;
 import com.telenor.assignment.repository.ProductDao;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -24,10 +23,10 @@ import java.util.Optional;
 import static com.telenor.assignment.util.Constants.PHONE_TABLE;
 import static com.telenor.assignment.util.Constants.SUBSCRIPTION_TABLE;
 
+@Slf4j
 @Repository
 @Transactional
 public class ProductDaoImpl implements ProductDao {
-    Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @PersistenceContext
     protected EntityManager entityManager;

@@ -19,13 +19,13 @@ public class ProductAPIParamValidatorInterceptor extends HandlerInterceptorAdapt
     {
         String type = request.getParameter(Constants.TYPE);
         if(!StringUtils.isEmpty(type)){
-            if(!ProductType.checkProductType(type)){
+            if(!ProductType.hasProductType(type)){
                 throw new IllegalProductTypeException();
             }
         }
         String property = request.getParameter(Constants.PROPERTY);
         if(!StringUtils.isEmpty(property)){
-            if(!PropertyType.checkPropertyType(property)){
+            if(!PropertyType.hasPropertyType(property)){
                 throw new IllegalPropertyTypeException();
             }
         }

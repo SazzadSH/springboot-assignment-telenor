@@ -24,6 +24,6 @@ public class Phone extends Product {
 
     @Override
     public String getProperties() {
-        return new StringBuffer().append("color:").append(getColor()).toString();
+        return "color:" + getColor();
     }
 }
