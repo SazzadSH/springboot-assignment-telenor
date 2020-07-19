@@ -4,7 +4,7 @@ This REST API based project is built with spring boot version 2.3.1. Java Runtim
 
 The purpose of the project is fairly simple, there is only one API which serves response based on the filter criteria.
 
-![Product GET API](docs/Product-Get-API.png)
+![Product GET API](docs/image/Product-Get-API.png)
 
 The expected response is a JSON array with the products in a 'data' wrapper. 
 
@@ -39,7 +39,7 @@ To handle exception gracefully with ResponseEntityExceptionHandler
 
 The class diagram of the database entity is followed - 
 
-![Product GET API](docs/Product-Entity-Class-Diagram.jpg)
+![Product GET API](docs/image/Product-Entity-Class-Diagram.jpg)
 
 To achieve polymorphic object query JPA inheritance singe table strategy has come in picture.
 
