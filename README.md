@@ -1,25 +1,11 @@
-# Welcome to Telenor's take-home assignment
-**Congratulations on making it this far! Great job!**
-The purpose of this assignment is to give you an opportunity to demonstrate some code.
-The requirement is simple, but it is important to demonstrate clean code and good test coverage.
-Do the absolute minimum work required for the application. Out of the box configurations and in-memory DBs will do just fine.
-There is no time limit, but it shouldn't take more than 60-90min. 
+# **Guide**
 
----
-In a basic Dockerized Springboot Maven application, build a single REST API endpoint that returns a filtered set of products from the provided data in the data.csv file
-```
-GET /product
+This REST API based project is built with spring boot version 2.3.1. Java Runtime Environment 8 is required to run the application as well as to build the application JDK8 is the minimum requirement.
 
-Query Parameter                 Description
-type                            The product type. (String. Can be 'phone' or 'subscription')
-min_price                       The minimum price in SEK. (Number)
-max_price                       The maximum price in SEK. (Number)
-city                            The city in which a store is located. (String)
-property                        The name of the property. (String. Can be 'color' or 'gb_limit')
-property:color                  The color of the phone. (String)
-property:gb_limit_min 	        The minimum GB limit of the subscription. (Number)
-property:gb_limit_max 	        The maximum GB limit of the subscription. (Number)
-```
+The purpose of the project is fairly simple, there is only one API which serves response based on the filter criteria.
+
+![Product GET API](docs/Product-Get-API.png)
+
 The expected response is a JSON array with the products in a 'data' wrapper. 
 
 Example: 
@@ -31,26 +17,78 @@ GET /product?type=subscription&max_price=1000&city=Stockholm
 		    type: 'subscription',
 		    properties: 'gb_limit:10',
 		    price: '704.00',
-		    store_address: 'Dana gärdet, Stockholm'
+		    store_address: 'Dana gï¿½rdet, Stockholm'
 	  	},
 	  	{
 		    type: 'subscription',
 		    properties: 'gb_limit:10',
 		    price: '200.00',
-		    store_address: 'Octavia gränden, Stockholm'
+		    store_address: 'Octavia grï¿½nden, Stockholm'
 	  	}
 	]
 }
 ```
 
-Your solution should correctly filter any combination of API parameters and use some kind of a datastore.
-All parameters are optional, all minimum and maximum fields should be inclusive (e.g. min_price=100&max_price=1000 should return items with price 100, 200... or 1000 SEK). 
-The applications does not need to support multiple values (e.g. type=phone,subscription or property.color=green,red).
+As persistence layer in memory H2 is being used and to manage persistence Spring Data JPA 2.2 is being used.
 
-We should be able to:
-- build the application with Maven
-- build the Docker image and run it
-- make requests to verify the behavior
+Request and Response has been validated by HandlerInterceptorAdapter and ResponseBodyAdvice available under validator package, response has been delivered with an immutable DTO.
 
-Please provide an archive with the source code and a list of the terminal commands to build and run the application.
+Several auto converter has been introduced to map request parameter with Enum instance which can be found under helper package and the configuration is available at config package
+
+To handle exception gracefully with ResponseEntityExceptionHandler 
+
+The class diagram of the database entity is followed - 
+
+![Product GET API](docs/Product-Entity-Class-Diagram.jpg)
+
+To achieve polymorphic object query JPA inheritance singe table strategy has come in picture.
+
+TTD approach is being following during the development, Including unit testing and integration testing 4 different types style is available at test folder.
+> 1. Unit testing with mockito jupiter
+> 2. Unit testing Spring Test Framework
+> 3. JPA testing with @DataJpaTest
+> 4. Integration testing with TestRestTemplate
+
+**Build the application with Maven**
+
+It's a maven based application, To build the application following command need to be run from command line.
+~~~
+mvn package
+~~~
+or
+~~~
+mvnw package
+~~~
+Again you will need to have minimum JDK8 available at you PATH variable. If you don't have JDK8 installed please follow the docker build section 2.
+
+**Run the application**
+
+~~~
+java -jar target/springboot-assignment-telenor.jar
+~~~
+
+**Build the Docker image**
+
+S1.
+
+To build a docker image with the package, that has been generated at the previous step following command is necessary from command line.
+~~~
+docker build -t springboot-assignment-telenor .
+~~~
+
+S2.
+
+At file DockerfileBuildWIthMavenImage is has been illustrated how to build the package from this project source code with maven docker image and then build the docker image. 
+Its pretty helpful if no JDK is installed in the system. Only dependency is docker. Following is the command -
+~~~
+docker build -t springboot-assignment-telenor -f DockerfileBuildWIthMavenImage .
+~~~
+
+**Run the Docker image**
+
+To run the newly created image command is give.  
+~~~
+docker run -p 8080:8080 springboot-assignment-telenor
+~~~
+NB: Need to make sure, the port 8080 is free.
 

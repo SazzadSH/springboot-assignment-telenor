@@ -1,6 +1,6 @@
 package com.telenor.assignment.config;
 
-import com.telenor.assignment.Validator.ProductAPIParamValidatorInterceptor;
+import com.telenor.assignment.validator.ProductAPIParamValidatorInterceptor;
 import com.telenor.assignment.helper.enummapper.StringAutoDecoderFactory;
 import com.telenor.assignment.helper.enummapper.StringToEnumConverterFactory;
 import org.springframework.context.annotation.Configuration;

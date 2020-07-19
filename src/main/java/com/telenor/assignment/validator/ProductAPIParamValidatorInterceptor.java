@@ -1,4 +1,4 @@
-package com.telenor.assignment.Validator;
+package com.telenor.assignment.validator;
 
 import com.telenor.assignment.expection.IllegalProductTypeException;
 import com.telenor.assignment.expection.IllegalPropertyTypeException;

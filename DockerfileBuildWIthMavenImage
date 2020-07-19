@@ -1,0 +1,10 @@
+FROM maven:3.6-jdk-8-alpine AS build-with-mvn-image
+COPY pom.xml /usr/src/app/pom.xml
+RUN mvn -f /usr/src/app/pom.xml dependency:go-offline -Dhttps.protocols=TLSv1.2
+COPY src /usr/src/app/src
+RUN mvn -f /usr/src/app/pom.xml clean package
+
+FROM openjdk:8-jre-alpine AS copy-package
+EXPOSE 8080
+COPY --from=build-with-mvn-image /usr/src/app/target/ /usr/app/
+ENTRYPOINT ["java","-jar","/usr/app/springboot-assignment-telenor.jar"]
